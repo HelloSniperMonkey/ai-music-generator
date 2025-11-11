@@ -1,39 +1,27 @@
 
 import React from 'react';
 
+// Equalizer-style animated loader to reinforce music theme
 export const Loader: React.FC = () => {
   return (
-    <svg
-      className="w-16 h-16"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid"
-    >
-      <circle
-        cx="50"
-        cy="50"
-        r="32"
-        strokeWidth="8"
-        stroke="url(#grad)"
-        strokeDasharray="50.26548245743669 50.26548245743669"
-        fill="none"
-        strokeLinecap="round"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          repeatCount="indefinite"
-          dur="1s"
-          keyTimes="0;1"
-          values="0 50 50;360 50 50"
-        ></animateTransform>
-      </circle>
-      <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#a855f7', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 1 }} />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className="flex items-end space-x-1 h-16 w-16 justify-center" aria-label="Loading">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          className="w-3 rounded-full bg-gradient-to-t from-purple-600 to-pink-500 animate-pulse"
+          style={{
+            animation: `eqPulse 1.2s ease-in-out ${i * 0.12}s infinite`,
+            boxShadow: '0 0 10px rgba(236,72,153,.35), 0 0 18px rgba(139,92,246,.35)',
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes eqPulse {
+          0%, 100% { height: 25%; opacity: .55; }
+          40% { height: 95%; opacity: 1; }
+          60% { height: 55%; opacity: .85; }
+        }
+      `}</style>
+    </div>
   );
 };

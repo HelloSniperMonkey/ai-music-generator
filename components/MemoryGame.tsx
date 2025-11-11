@@ -91,18 +91,18 @@ export const MemoryGame: React.FC = () => {
       {/* Game Header */}
       <div className="mb-6 text-center">
         <div className="flex justify-between items-center mb-3">
-          <div className="bg-purple-900/30 px-4 py-2 rounded-lg border border-purple-600/50">
+          <div className="bg-purple-900/30 px-4 py-2 rounded-lg border border-purple-600/50 card">
             <span className="text-sm text-purple-300">Moves: </span>
             <span className="text-lg font-bold text-purple-400">{moves}</span>
           </div>
-          <div className="bg-pink-900/30 px-4 py-2 rounded-lg border border-pink-600/50">
+          <div className="bg-pink-900/30 px-4 py-2 rounded-lg border border-pink-600/50 card">
             <span className="text-sm text-pink-300">Pairs: </span>
             <span className="text-lg font-bold text-pink-400">{matchedPairs}/{EMOJIS.length}</span>
           </div>
         </div>
         
         {isGameComplete && (
-          <div className="mb-4 p-4 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg border border-purple-500/50 animate-pulse">
+          <div className="mb-4 p-4 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg border border-purple-500/50 animate-pulse card">
             <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
               🎉 Perfect! You completed the game in {moves} moves!
             </p>
@@ -111,7 +111,7 @@ export const MemoryGame: React.FC = () => {
         
         <button
           onClick={initializeGame}
-          className="text-sm px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors border border-gray-600"
+          className="btn btn-ghost text-sm"
         >
           New Game
         </button>
@@ -124,27 +124,19 @@ export const MemoryGame: React.FC = () => {
             key={card.id}
             onClick={() => handleCardClick(index)}
             disabled={card.matched || card.flipped || isChecking}
-            className={`
-              aspect-square rounded-xl text-4xl flex items-center justify-center
-              transform transition-all duration-300 shadow-lg
-              ${card.flipped || card.matched
-                ? 'bg-gradient-to-br from-purple-600 to-pink-600 scale-100 rotate-0'
-                : 'bg-gradient-to-br from-gray-700 to-gray-800 hover:scale-105 hover:shadow-xl cursor-pointer'
-              }
-              ${card.matched ? 'opacity-60 ring-2 ring-green-400' : ''}
-              ${!card.flipped && !card.matched ? 'hover:from-gray-600 hover:to-gray-700' : ''}
-              disabled:cursor-not-allowed
-            `}
-            style={{
-              transform: card.flipped || card.matched ? 'rotateY(0deg)' : 'rotateY(0deg)',
-            }}
+            className={`card3d aspect-square rounded-xl transform transition-all duration-300 shadow-lg disabled:cursor-not-allowed ${card.matched ? 'opacity-70 ring-2 ring-green-400' : ''}`}
           >
-            <span className={`transition-opacity duration-200 ${card.flipped || card.matched ? 'opacity-100' : 'opacity-0'}`}>
-              {card.emoji}
-            </span>
-            <span className={`absolute transition-opacity duration-200 ${card.flipped || card.matched ? 'opacity-0' : 'opacity-100'}`}>
-              🎼
-            </span>
+            <div
+              className="inner"
+              style={{ transform: (card.flipped || card.matched) ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+            >
+              <div className="front bg-gradient-to-br from-gray-700 to-gray-800">
+                <span className="text-3xl">🎼</span>
+              </div>
+              <div className="back bg-gradient-to-br from-purple-600 to-pink-600">
+                <span className="text-4xl">{card.emoji}</span>
+              </div>
+            </div>
           </button>
         ))}
       </div>

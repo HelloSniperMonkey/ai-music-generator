@@ -89,7 +89,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
-      className={`relative border-2 border-dashed rounded-lg p-8 sm:p-12 text-center transition-all duration-300 ${dragActive ? 'border-purple-500 bg-gray-800/80 scale-105' : 'border-gray-700 bg-gray-900/50'}`}
+      className={`dropzone rounded-xl p-8 sm:p-12 text-center transition-all duration-300 card gradient-ring ${dragActive ? 'is-active scale-[1.02]' : ''}`}
     >
       <input
         ref={inputRef}
@@ -103,15 +103,15 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
       {!selectedFile ? (
         <label htmlFor="file-upload" className="cursor-pointer">
           <div className="flex flex-col items-center">
-            <UploadIcon className="h-12 w-12 text-gray-500" />
-            <p className="mt-4 font-semibold text-gray-300">
+            <UploadIcon className="h-12 w-12 text-gray-500 drop-shadow-[0_0_12px_rgba(255,255,255,.12)]" />
+            <p className="mt-4 font-semibold text-gray-200">
               Drag & drop your audio file here
             </p>
             <p className="mt-1 text-sm text-gray-500">or</p>
             <button
               type="button"
               onClick={onButtonClick}
-              className="mt-2 text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+              className="mt-2 text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors underline decoration-dotted"
             >
               Click to browse
             </button>
@@ -120,14 +120,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
         </label>
       ) : (
         <div className="flex flex-col items-center justify-center space-y-4">
-            <AudioFileIcon className="w-12 h-12 text-purple-400"/>
-            <p className="font-medium text-white break-all">{selectedFile.name}</p>
+            <AudioFileIcon className="w-12 h-12 text-purple-400 drop-shadow-[0_0_16px_rgba(168,85,247,.35)]"/>
+            <p className="font-medium text-white break-all max-w-full truncate">{selectedFile.name}</p>
             <p className="text-sm text-gray-400">
               ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
             </p>
             <button
                 onClick={removeFile}
-                className="text-sm font-semibold text-pink-500 hover:text-pink-400 transition-colors"
+                className="text-sm font-semibold text-pink-500 hover:text-pink-400 transition-colors underline decoration-dotted"
             >
                 Change file
             </button>

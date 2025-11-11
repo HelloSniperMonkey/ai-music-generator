@@ -73,10 +73,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen text-white flex flex-col font-sans antialiased">
+    <div className="min-h-screen text-white flex flex-col font-sans antialiased">
       <Header />
-      <main className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
-        <div className="w-full max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-sm rounded-2xl shadow-2xl shadow-purple-500/10 overflow-hidden border border-gray-800">
+      <main className="relative flex-grow flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-2xl mx-auto card gradient-ring overflow-hidden">
           <div className="p-6 sm:p-8">
             <div className="text-center">
               <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
@@ -96,7 +96,7 @@ const App: React.FC = () => {
                   <div className="flex flex-col items-center">
                     <button
                       onClick={handleGenerateMusic}
-                      className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="btn w-full sm:w-auto"
                       disabled={!file}
                     >
                       Generate Music
@@ -107,7 +107,7 @@ const App: React.FC = () => {
               {status === 'loading' && (
                 <div className="flex flex-col items-center justify-center space-y-6">
                   {/* Prominent Status Banner */}
-                  <div className="w-full bg-gradient-to-r from-purple-900/40 to-indigo-900/40 border-2 border-purple-500/60 rounded-xl p-6 backdrop-blur-sm">
+                  <div className="w-full bg-gradient-to-r from-purple-900/30 to-indigo-900/30 border border-purple-500/40 rounded-xl p-6 backdrop-blur-md card">
                     <div className="flex items-center justify-center space-x-4 mb-3">
                       <Loader />
                       <div className="text-left">
@@ -117,8 +117,8 @@ const App: React.FC = () => {
                     </div>
                     
                     {/* Progress indicator */}
-                    <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse"></div>
+                    <div className="w-full bg-gray-800/70 rounded-full h-2 overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse" style={{width:'100%'}}></div>
                     </div>
                   </div>
 
@@ -135,7 +135,7 @@ const App: React.FC = () => {
                         </div>
                         <button
                           onClick={() => setShowGame(true)}
-                          className="px-4 py-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
+                          className="btn"
                         >
                           Play Game
                         </button>
@@ -152,7 +152,7 @@ const App: React.FC = () => {
                         </h3>
                         <button
                           onClick={() => setShowGame(false)}
-                          className="text-sm px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-md transition-colors"
+                          className="btn btn-ghost text-sm px-3 py-1"
                         >
                           Hide Game
                         </button>
@@ -168,12 +168,12 @@ const App: React.FC = () => {
               )}
 
               {status === 'error' && error && (
-                <div className="text-center p-4 bg-red-900/50 border border-red-700 rounded-lg">
+                <div className="text-center p-4 bg-red-900/40 border border-red-700/70 rounded-lg card">
                   <p className="font-semibold">Generation Failed</p>
                   <p className="text-sm text-red-300 mt-1">{error}</p>
                    <button
                       onClick={handleReset}
-                      className="mt-4 px-4 py-2 bg-red-600 text-white font-semibold text-sm rounded-md hover:bg-red-700 transition-colors duration-200"
+                      className="mt-4 btn btn-danger text-sm"
                     >
                       Try Again
                     </button>
@@ -183,7 +183,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
-      <footer className="text-center p-4 text-xs text-gray-600">
+      <footer className="footer-bar text-center p-4 text-xs text-gray-400">
         <p>&copy; {new Date().getFullYear()} AI Music Generator. All Rights Reserved.</p>
       </footer>
     </div>

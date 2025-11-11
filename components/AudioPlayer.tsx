@@ -21,7 +21,7 @@ const ReplayIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, onReset }) => {
   return (
-    <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 sm:p-6 text-center space-y-4">
+    <div className="card gradient-ring p-4 sm:p-6 text-center space-y-4">
       <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-blue-400 to-purple-500">
         Your Track is Ready!
       </h3>
@@ -32,14 +32,14 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, onReset }) => {
         <a
           href={src}
           download="generated_music.mp3"
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition-colors duration-200"
+          className="btn btn-success w-full sm:w-auto"
         >
           <DownloadIcon className="w-5 h-5" />
           Download
         </a>
         <button
             onClick={onReset}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition-colors duration-200"
+            className="btn btn-ghost w-full sm:w-auto"
         >
             <ReplayIcon className="w-5 h-5"/>
             Generate New
