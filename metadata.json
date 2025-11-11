@@ -1,0 +1,5 @@
+{
+  "name": "AI Music Generator",
+  "description": "An application that generates a full musical track from an isolated vocal recording. Upload an MP3 or WAV file of a singing voice, and the AI will compose and generate accompanying music.",
+  "requestFramePermissions": []
+}
