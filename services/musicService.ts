@@ -11,8 +11,8 @@ export const generateMusic = (voiceFile: File): Promise<string> => {
   console.log(`Starting music generation for: ${voiceFile.name}`);
 
   return new Promise((resolve, reject) => {
-    // Simulate network and processing delay (2-3 minutes for realistic music generation)
-    const delay = 120000 + Math.random() * 60000; // 2-3 minutes
+    // Simulate network and processing delay (e.g., 5-8 seconds)
+    const delay = 5000 + Math.random() * 3000;
 
     setTimeout(() => {
       // Simulate a potential error
