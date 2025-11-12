@@ -1,32 +1,61 @@
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 /**
- * Simulates generating music from a voice file.
- * In a real application, this would involve uploading the file to a backend
- * which then processes it using a music generation AI model.
+ * Generates music from a voice file using the FastSAG backend.
  *
  * @param {File} voiceFile - The user's uploaded vocal track.
  * @returns {Promise<string>} A promise that resolves with the URL of the generated audio file.
  */
-export const generateMusic = (voiceFile: File): Promise<string> => {
+export const generateMusic = async (voiceFile: File): Promise<string> => {
   console.log(`Starting music generation for: ${voiceFile.name}`);
 
-  return new Promise((resolve, reject) => {
-    // Simulate network and processing delay (2-3 minutes for realistic music generation)
-    const delay = 120000 + Math.random() * 60000; // 2-3 minutes
+  try {
+    // Create form data with the voice file
+    const formData = new FormData();
+    formData.append('file', voiceFile);
 
-    setTimeout(() => {
-      // Simulate a potential error
-      if (voiceFile.name.toLowerCase().includes('error')) {
-        reject(new Error("The uploaded vocal track could not be processed. Please try a different file."));
-        return;
-      }
-      
-      // On success, return a URL to a placeholder audio file.
-      // This is a royalty-free track to demonstrate functionality.
-      const placeholderAudioUrl = 'https://storage.googleapis.com/test-utils-public/ai-music-generator-placeholder.mp3';
-      console.log(`Music generation successful. Audio available at: ${placeholderAudioUrl}`);
-      resolve(placeholderAudioUrl);
+    // Send request to backend
+    const response = await fetch(`${API_BASE_URL}/generate`, {
+      method: 'POST',
+      body: formData,
+    });
 
-    }, delay);
-  });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to generate music');
+    }
+
+    const data = await response.json();
+    
+    if (!data.success) {
+      throw new Error('Music generation failed');
+    }
+
+    // Return the full URL for downloading the generated file
+    const downloadUrl = `${API_BASE_URL}${data.download_url}`;
+    console.log(`Music generation successful. Processing time: ${data.processing_time}s`);
+    console.log(`Audio available at: ${downloadUrl}`);
+    
+    return downloadUrl;
+  } catch (error) {
+    console.error('Error generating music:', error);
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('An unexpected error occurred during music generation');
+  }
+};
+
+/**
+ * Check backend health status
+ */
+export const checkBackendHealth = async (): Promise<boolean> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    const data = await response.json();
+    return data.status === 'healthy' && data.models_loaded;
+  } catch (error) {
+    console.error('Backend health check failed:', error);
+    return false;
+  }
 };
